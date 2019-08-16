@@ -23,6 +23,21 @@ class ShoppingListActivity : AppCompatActivity() {
         val adapter = ShoppingListAdapter(shoppingItem)
         list_view.layoutManager = manager
         list_view.adapter = adapter
+
+        btn_send_list.setOnClickListener {
+            val sendItems = mutableListOf<String>()
+
+            // populate list into readable format
+            for (i in 0 until selectedItemList.size) {
+                sendItems.add(selectedItemList[i].itemName)
+            }
+
+            val sendItemsRefined = sendItems.joinToString(", ")
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.putExtra(Intent.EXTRA_TEXT, "Please pick me up to following: $sendItemsRefined")
+            intent.type = "text/plain"
+            startActivity(intent)
         }
     }
 }
