@@ -4,5 +4,5 @@ class ShoppingItem (
     val itemIconId: Int,
     val itemName: String,
     var itemSelected: Boolean,
-    val itemIndex: Int
+    var selectedItemIndex: Int
 )
