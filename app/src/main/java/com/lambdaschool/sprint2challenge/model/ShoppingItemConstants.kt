@@ -1,4 +1,6 @@
-package com.lambdaschool.sprint2challenge
+package com.lambdaschool.sprint2challenge.model
+
+import com.lambdaschool.sprint2challenge.R
 
 class ShoppingItemConstants {
     val ICON_IDS = intArrayOf(
