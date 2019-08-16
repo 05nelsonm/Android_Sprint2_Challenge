@@ -1,7 +1,6 @@
 package com.lambdaschool.sprint2challenge.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,8 @@ class ShoppingListAdapter(val data: MutableList<ShoppingItem>) :
     RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>() {
 
     lateinit var context: Context
-    val accentColor = "#D81B60"
-    val whiteColor = "#FFFFFF"
+    private val accentColor = "#4caf50"
+    private val whiteColor = "#FFFFFF"
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -39,7 +38,7 @@ class ShoppingListAdapter(val data: MutableList<ShoppingItem>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.image.setImageResource(data[position].itemIconId)
-        holder.name.text = data[position].itemName
+        holder.name.text = data[position].itemName.replace("_", " ", false)
         if (data[position].itemSelected) {
             holder.itemCard.setCardBackgroundColor(parseColor(accentColor))
         } else {

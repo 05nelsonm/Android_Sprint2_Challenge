@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.sprint2challenge.R
 import com.lambdaschool.sprint2challenge.adapter.ShoppingListAdapter
-import com.lambdaschool.sprint2challenge.model.ShoppingItem
+import com.lambdaschool.sprint2challenge.util.NotificationGenerator
 import com.lambdaschool.sprint2challenge.util.SelectedList.selectedItemList
 import com.lambdaschool.sprint2challenge.util.ShopingItemArrayConstructor.shoppingItem
 import kotlinx.android.synthetic.main.activity_shopping_list.*
 
 class ShoppingListActivity : AppCompatActivity() {
+
+    companion object {
+        const val NOTIFICATION_ID = 3871
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +29,23 @@ class ShoppingListActivity : AppCompatActivity() {
         list_view.adapter = adapter
 
         btn_send_list.setOnClickListener {
+
+            NotificationGenerator.simpleNotification(this)
+
+            // Initialize empty mutableList
             val sendItems = mutableListOf<String>()
 
-            // populate list into readable format
+            // populate mutableList with selectedItems
             for (i in 0 until selectedItemList.size) {
-                sendItems.add(selectedItemList[i].itemName)
+                sendItems.add(selectedItemList[i].itemName.replace("_", " ", false))
             }
 
+            // Refine mutableList into a single string
             val sendItemsRefined = sendItems.joinToString(", ")
 
+            // Share string of data with an app that can handle text/plain
             val intent = Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_TEXT, "Please pick me up to following: $sendItemsRefined")
+            intent.putExtra(Intent.EXTRA_TEXT, "Please pick me up the following: $sendItemsRefined")
             intent.type = "text/plain"
             startActivity(intent)
         }
