@@ -2,7 +2,7 @@ package com.lambdaschool.sprint2challenge.model
 
 import com.lambdaschool.sprint2challenge.R
 
-class ShoppingItemConstants {
+object ShoppingItemConstants {
     val ICON_IDS = intArrayOf(
         R.drawable.almond,
         R.drawable.apple_green,
