@@ -3,6 +3,7 @@ package com.lambdaschool.sprint2challenge.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.sprint2challenge.R
@@ -30,24 +31,34 @@ class ShoppingListActivity : AppCompatActivity() {
 
         btn_send_list.setOnClickListener {
 
-            NotificationGenerator.simpleNotification(this)
+            // Show a toast if nothing's selected
+            if (selectedItemList.size > 0) {
 
-            // Initialize empty mutableList
-            val sendItems = mutableListOf<String>()
+                NotificationGenerator.simpleNotification(this)
 
-            // populate mutableList with selectedItems
-            for (i in 0 until selectedItemList.size) {
-                sendItems.add(selectedItemList[i].itemName.replace("_", " ", false))
+                // Initialize empty mutableList
+                val sendItems = mutableListOf<String>()
+
+                // populate mutableList with selectedItems
+                for (i in 0 until selectedItemList.size) {
+                    sendItems.add(selectedItemList[i].itemName.replace("_", " ", false))
+                }
+
+                // Sort the list alphabetically
+                sendItems.sort()
+
+                // Refine mutableList into a single string
+                val sendItemsRefined = sendItems.joinToString(", ")
+
+                // Share string of data with an app that can handle text/plain
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.putExtra(Intent.EXTRA_TEXT, "Please pick me up the following: $sendItemsRefined")
+                intent.type = "text/plain"
+                startActivity(intent)
+
+            } else {
+                Toast.makeText(this, "No items are selected", Toast.LENGTH_SHORT).show()
             }
-
-            // Refine mutableList into a single string
-            val sendItemsRefined = sendItems.joinToString(", ")
-
-            // Share string of data with an app that can handle text/plain
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_TEXT, "Please pick me up the following: $sendItemsRefined")
-            intent.type = "text/plain"
-            startActivity(intent)
         }
     }
 }
